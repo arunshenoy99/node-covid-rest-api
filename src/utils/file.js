@@ -23,4 +23,12 @@ const saveData = (service, newData) => {
     }
 }
 
-module.exports = { getData, saveData }
+const getServiceDetails = (service) => {
+    const fileName = path.join(__dirname, `../data/${service}.json`)
+    const buffer = fs.readFileSync(fileName)
+    const data = JSON.parse(buffer)
+    const serviceDetails = Object.keys(data[0])
+    return serviceDetails
+}
+
+module.exports = { getData, saveData, getServiceDetails }
