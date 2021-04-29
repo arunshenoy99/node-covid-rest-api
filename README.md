@@ -6,6 +6,9 @@ GET
 https://desolate-island-79582.herokuapp.com/:service 
 returns the required service data in json format.
 
+https://desolate-island-79582.herokuapp.com/:service/form
+returns custom forms to add new information to the resources
+
 POST
 https://desolate-island-79582.herokuapp.com/:service 
 returns error/success indicated via status codes
