@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Central Government",
+        "data": [
+            {
+                "link": "https://www.mohfw.gov.in/",
+                "description": "Ministry of Health and Family Welfare"
+            },
+            {
+                "link": "https://covid19.india.gov.in/",
+                "description": "COVID-19 Inter-Ministerial Notifications"
+            },
+            {
+                "link": "https://www.mea.gov.in/covid-19-updates.htm",
+                "description": "Ministry of External Affairs COVID-19 Updates"
+            }
+        ]
+    },
+    {
+        "title": "State Government",
+        "data": [
+            {
+                "link": "https://covid19.karnataka.gov.in",
+                "description": "COVID-19 Information Portal Karnataka",
+                "location": "Karnataka"
+            },
+            {
+                "link": "https://www.covidwar.karnataka.gov.in/",
+                "description": "COVID-19 War Room Karnataka",
+                "location": "Karnataka"
+            }
+        ]
+    },
+    {
+        "title": "Municipal Corporations",
+        "data": [
+            {
+                "link": "https://bbmp.gov.in/covid19.html",
+                "description": "COVID-19 War Room BBMP",
+                "location": "Bengaluru"
+            }
+        ]
+    }
+]

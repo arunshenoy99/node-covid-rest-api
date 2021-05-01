@@ -115,12 +115,9 @@ router.get('/:service/form', (req, res) => {
     const displayService = service.charAt(0).toUpperCase() + service.slice(1)
     res.render('service.hbs', {
         serviceDetails,
-        displayService
+        displayService,
+        service
     })
-})
-
-router.get('*', (req, res) => {
-    res.status(404).json( { error: 'The requested service was not found.' } )
 })
 
 module.exports = router

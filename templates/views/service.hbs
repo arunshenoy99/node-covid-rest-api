@@ -17,24 +17,54 @@
                             <h1 id="service-heading">{{displayService}}</h1>
                         </div>
                         {{#each serviceDetails}}
-                            <div class="form-group row justify-content-center">
-                                <label for="{{this}}" class="col-md-2 col-form-label">{{this}}</label>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" name="{{this}}" id="{{this}}" required>
+                            {{#ifEquals this "Status"}}
+                                <div class="form-group row justify-content-center">
+                                    <label for="{{this}}" class="col-md-2 col-form-label">{{this}}</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="{{this}}" id="{{this}}" required>
+                                        <div class="invalid-feedback d-block" id="{{this}}-feedback"></div>
+                                    </div>
+                                </div>
+                            {{/ifEquals}}
+                        {{/each}}
+                        <div class="form-group row justify-content-center">
+                            <div class="col-md-4 offset-md-2">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="Status" id="Status">
+                                    <label for="status" class="form-check-label">
+                                        <strong>I have verified this information?</strong>
+                                        <a href="#status-info" data-target="#status-info" data-toggle="collapse">Know more</a>
+                                    </label>
                                 </div>
                             </div>
-                        {{/each}}
+                        </div>
+                        <div class="collapse" id="status-info">
+                            <div class="form-group row justify-content-center">
+                                <div class="col-md-4 offset-md-2">
+                                     <p>Our goal is to help our users find the required resources as soon as possible. If you have verified the information provided then it will help 
+                                            others in finding the right contacts in a short amount of time. You can still submit the information even if it is not verified by leaving the 
+                                            checkbox unticked.
+                                        </p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row justify-content-center">
                             <div class="col-md-12 text-center">
                                 <button class="btn btn-secondary" type="submit">Submit</button>
                             </div>
                         </div>
                     </form>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 text-center">
+                            <h3 id="success" class="text-success"></h3>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/app.js"></script>
     </body>
 </html>
