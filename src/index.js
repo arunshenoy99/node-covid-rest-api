@@ -7,6 +7,7 @@ const serviceRouter = require('./routers/service')
 
 const publicPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
+const partialsPath = path.join(__dirname, '../templates/partials')
 
 const app = express()
 
@@ -16,9 +17,14 @@ app.use(express.urlencoded({ extended: true }))
 
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
+hbs.registerPartials(partialsPath)
+
+hbs.registerHelper('ifNotEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.inverse(this) : options.fn(this);
+});
 
 hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
-    return (arg1 == arg2) ? options.inverse(this) : options.fn(this);
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
 app.use(serviceRouter)

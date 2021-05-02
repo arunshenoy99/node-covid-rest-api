@@ -1,8 +1,9 @@
 $(document).ready(function () {
     const service = window.location.pathname.split('/')[1]
-    const url = `${window.location.protocol}//${window.location.hostname}/${service}`
+    const url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/${service}`
     $('#service-form').submit(async function (e) {
         e.preventDefault()
+        $('#service-form-submit').attr('disabled', true)
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -12,14 +13,15 @@ $(document).ready(function () {
         })
         if (response.status === 201) {
             $('.invalid-feedback').html('')
-            $('#success').html('Your data was recieved successfully.')
+            $('#successModal').modal('show')
         }
         else {
             const data = await response.json()
             const errors = Object.keys(data.errors)
             errors.forEach((error) => {
-                $(`#${error}-feedback`).html(data.errors[error].message)
+                $(`[id='${error}-feedback']`).html(data.errors[error].message)
             })
         }
+        $('#service-form-submit').attr('disabled', false)
     })
 })

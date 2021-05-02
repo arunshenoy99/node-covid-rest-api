@@ -30,3 +30,7 @@ body {
 .form-control, .form-check-label {
     font-size: 20px;
 }
+
+textarea {
+    resize: none;
+}

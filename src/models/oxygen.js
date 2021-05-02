@@ -12,27 +12,26 @@ const oxygenSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 10,
-        maxlength: 10,
         validate: {
             validator: phoneNumber,
-            message: 'Phone number must not contain alphabets.'
+            message: 'Invalid phone number.'
         }
     },
-    'Area Name': {
+    'City': {
         type: String,
         trim: true
+    },
+    'Area': {
+        type: String,
+        trim: true
+    },
+    'Description': {
+        type: String,
+        trim: true,
+        maxlength: 1000,
     },
     'Status': {
         type: String,
-    },
-    'Remarks': {
-        type: String,
-        trim: true
-    },
-    'PIN Code': {
-        type: String,
-        trim: true
     }
 })
 

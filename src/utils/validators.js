@@ -1,5 +1,7 @@
+const { isValidPhoneNumber } = require('libphonenumber-js')
+
 const phoneNumber = (value) => {
-    return /^\d+$/.test(value)
+    return isValidPhoneNumber(value, 'IN')
 }
 
 module.exports = { phoneNumber }
