@@ -1,5 +1,5 @@
 const express = require('express')
-const { getData, getServiceDetails } = require('../utils/file')
+const { getData, getServiceDetails } = require('../utils/data')
 
 const Ambulance = require('../models/ambulance')
 const Food = require('../models/food')
@@ -108,8 +108,7 @@ router.get('/:service/form', (req, res) => {
     const service = req.params.service
     const isValid = allowedServices.includes(service)
     if (!isValid) {
-        const error = JSON.stringify({ error: 'The requested service was not found' })
-        return res.status(404).send(error)
+        return res.status(404).json({ error: 'The requested service was not found' })
     }
     const serviceDetails = getServiceDetails(service)
     const displayService = service.charAt(0).toUpperCase() + service.slice(1)

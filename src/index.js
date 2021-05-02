@@ -1,7 +1,7 @@
 const express = require('express')
 const hbs = require('hbs')
 const path = require('path')
-const { getData } = require('./utils/file')
+const { getData } = require('./utils/data')
 
 const serviceRouter = require('./routers/service')
 

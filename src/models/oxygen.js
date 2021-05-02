@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { saveData } = require('../utils/file')
+const { saveData } = require('../utils/data')
 const { phoneNumber } = require('../utils/validators')
 
 const oxygenSchema = new mongoose.Schema({
@@ -32,7 +32,11 @@ const oxygenSchema = new mongoose.Schema({
     },
     'Status': {
         type: String,
-    }
+    },
+    'Timestamp': {
+        type: Number,
+        default: Date.now()
+    },
 })
 
 oxygenSchema.methods.saveData = function () {

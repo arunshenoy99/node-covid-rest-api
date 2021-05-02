@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { saveData } = require('../utils/file')
+const { saveData } = require('../utils/data')
 const { phoneNumber } = require('../utils/validators')
 
 const plasmaSchema = new mongoose.Schema({
@@ -32,7 +32,11 @@ const plasmaSchema = new mongoose.Schema({
     },
     'Status': {
         type: String
-    }
+    },
+    'Timestamp': {
+        type: Number,
+        default: Date.now()
+    },
 })
 
 plasmaSchema.methods.saveData = function () {

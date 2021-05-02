@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { saveData } = require('../utils/file')
+const { saveData } = require('../utils/data')
 const { phoneNumber } = require('../utils/validators')
 
 const hospitalsSchema = new mongoose.Schema({
@@ -32,6 +32,10 @@ const hospitalsSchema = new mongoose.Schema({
     },
     'Status': {
         type: String,
+    },
+    'Timestamp': {
+        type: Number,
+        default: Date.now()
     }
 })
 
