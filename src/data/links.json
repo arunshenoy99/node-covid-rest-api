@@ -4,15 +4,18 @@
         "data": [
             {
                 "link": "https://www.mohfw.gov.in/",
-                "description": "Ministry of Health and Family Welfare"
+                "description": "Ministry of Health and Family Welfare",
+                "phone": "+91-11-23978046"
             },
             {
                 "link": "https://covid19.india.gov.in/",
-                "description": "COVID-19 Inter-Ministerial Notifications"
+                "description": "COVID-19 Inter-Ministerial Notifications",
+                "phone": "+91-11-23978046"
             },
             {
                 "link": "https://www.mea.gov.in/covid-19-updates.htm",
-                "description": "Ministry of External Affairs COVID-19 Updates"
+                "description": "Ministry of External Affairs COVID-19 Updates",
+                "phone": "+91-011-23012113"
             }
         ]
     },
@@ -22,12 +25,14 @@
             {
                 "link": "https://covid19.karnataka.gov.in",
                 "description": "COVID-19 Information Portal Karnataka",
-                "location": "Karnataka"
+                "location": "Karnataka",
+                "phone": "104 / 97456-97456"
             },
             {
                 "link": "https://www.covidwar.karnataka.gov.in/",
                 "description": "COVID-19 War Room Karnataka",
-                "location": "Karnataka"
+                "location": "Karnataka",
+                "phone": "8277864065,8277864067,8277864068,8277864069"
             }
         ]
     },
@@ -37,7 +42,8 @@
             {
                 "link": "https://bbmp.gov.in/covid19.html",
                 "description": "COVID-19 War Room BBMP",
-                "location": "Bengaluru"
+                "location": "Bengaluru",
+                "phone": "080-22660000"
             }
         ]
     }
