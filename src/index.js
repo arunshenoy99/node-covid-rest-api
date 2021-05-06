@@ -8,6 +8,8 @@ const serviceRouter = require('./routers/service')
 const otpRouter = require('./routers/otp')
 const dataRouter = require('./routers/data')
 
+const apiLimiter = require('./middleware/rateLimit')
+
 const app = express()
 
 const publicPath = path.join(__dirname, '../public')
@@ -19,6 +21,7 @@ app.use(session({ secret: process.env.SESSION_TOKEN, resave: false, saveUninitia
 app.use(express.static(publicPath))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(apiLimiter)
 app.use(otpRouter)
 app.use(serviceRouter)
 app.use(dataRouter)
