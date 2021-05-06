@@ -97,10 +97,11 @@ router.get('/:service', (req, res) => {
     if (!isValid) {
         return res.status(404).json({ error: 'The requested service was not found' })
     }
-    req.session.service = req.params.service
-    req.session.email = undefined
-    req.session.otp = undefined
-    res.render('email')
+    req.session.service = service
+    req.session.displayService = service.charAt(0).toUpperCase() + service.slice(1)
+    res.render('email', {
+        displayService: req.session.displayService
+    })
 })
 
 router.get('/:service/form', validate, (req, res) => {

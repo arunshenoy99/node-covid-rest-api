@@ -1,0 +1,21 @@
+html {
+    scroll-behavior: smooth;
+    height: 100%
+}
+
+body {
+    height: 100%;
+}
+
+.container {
+    height: 100%;
+}
+
+#service-heading {
+    margin: 50px 10px;
+}
+
+.form-container {
+    height: 100%;
+    overflow-y: auto;
+}
