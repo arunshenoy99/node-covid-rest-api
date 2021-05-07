@@ -28,7 +28,8 @@ otpRouter.get('/otp', (req, res) => {
     if (req.session.otp && email == req.session.email) {
         return res.render('otp', {
             email,
-            displayService: req.session.displayService
+            displayService: req.session.displayService,
+            service: req.session.service
         })
     }
 
@@ -44,7 +45,8 @@ otpRouter.get('/otp', (req, res) => {
 
     res.render('otp', {
         email,
-        displayService: req.session.displayService
+        displayService: req.session.displayService,
+        service: req.session.service
     })
 })
 
