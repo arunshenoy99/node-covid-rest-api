@@ -8,6 +8,9 @@ const oxygenSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    'Contributor': {
+        type: String
+    },
     'Phone': {
         type: String,
         required: true,
@@ -39,9 +42,10 @@ const oxygenSchema = new mongoose.Schema({
     },
 })
 
-oxygenSchema.methods.saveData = function () {
+oxygenSchema.methods.saveData = function (contributor) {
     const oxygen = this.toObject()
     delete oxygen._id
+    oxygen.Contributor = contributor
     const status = saveData('oxygen', oxygen)
     return status
 }

@@ -8,6 +8,9 @@ const ambulanceSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    'Contributor': {
+        type: String
+    },
     'Phone': {
         type: String,
         required: true,
@@ -39,9 +42,10 @@ const ambulanceSchema = new mongoose.Schema({
     }
 })
 
-ambulanceSchema.methods.saveData = function () {
+ambulanceSchema.methods.saveData = function (contributor) {
     const ambulance = this.toObject()
     delete ambulance._id
+    ambulance.Contributor = contributor
     const status = saveData('ambulance', ambulance)
     return status
 }

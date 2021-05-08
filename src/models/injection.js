@@ -8,6 +8,9 @@ const injectionSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    'Contributor': {
+        type: String
+    },
     'Phone': {
         type: String,
         required: true,
@@ -39,9 +42,10 @@ const injectionSchema = new mongoose.Schema({
     }
 })
 
-injectionSchema.methods.saveData = function () {
+injectionSchema.methods.saveData = function (contributor) {
     const injection = this.toObject()
     delete injection._id
+    injection.Contributor = contributor
     const status = saveData('injection', injection)
     return status
 }

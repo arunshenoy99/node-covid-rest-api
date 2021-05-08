@@ -15,7 +15,7 @@
                 <div class="col-12 align-self-center">
                     <form id="service-form">
                         <div class="text-center">
-                            <h1 id="service-heading">Contribute {{displayService}}</h1>
+                            <h1 id="service-heading">Add contact for {{displayService}}</h1>
                         </div>
                         {{#each serviceDetails}}
                             {{#ifNotEquals this "Status"}}
@@ -38,7 +38,10 @@
                         <div class="form-group row justify-content-center">
                             <label for="Description" class="col-md-2 col-form-label">Description:</label>
                             <div class="col-md-4">
-                                <textarea name="Description" id="Description" rows="4" class="form-control" >{{displayService}}</textarea>
+                                <textarea name="Description" id="Description" rows="4" class="form-control" >Contact for {{displayService}}</textarea>
+                                <small class="form-text text-muted">
+                                    Add a description for the contact Ex. conditions/quantity/price
+                                </small>
                             </div>
                         </div>
                         <div class="form-group row justify-content-center">
@@ -55,7 +58,7 @@
                         </div>
                         <div class="form-group row justify-content-center">
                             <div class="col-md-12 text-center">
-                                <button class="btn btn-secondary" type="submit" id="service-form-submit">Submit</button>
+                                <button class="btn btn-outline-success rounded-pill" type="submit" id="service-form-submit">Add Contact</button>
                             </div>
                         </div>
                     </form>

@@ -8,6 +8,9 @@ const plasmaSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    'Contributor': {
+        type: String
+    },
     'Phone': {
         type: String,
         required: true,
@@ -39,9 +42,10 @@ const plasmaSchema = new mongoose.Schema({
     },
 })
 
-plasmaSchema.methods.saveData = function () {
+plasmaSchema.methods.saveData = function (contributor) {
     const plasma = this.toObject()
     delete plasma._id
+    plasma.Contributor = contributor
     const status = saveData('plasma', plasma)
     return status
 }

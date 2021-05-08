@@ -8,6 +8,9 @@ const foodSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    'Contributor': {
+        type: String
+    },
     'Phone': {
         type: String,
         required: true,
@@ -39,9 +42,10 @@ const foodSchema = new mongoose.Schema({
     }
 })
 
-foodSchema.methods.saveData = function () {
+foodSchema.methods.saveData = function (contributor) {
     const food = this.toObject()
     delete food._id
+    food.Contributor = contributor
     const status = saveData('food', food)
     return status
 }

@@ -17,7 +17,7 @@ router.post('/oxygen', validate, async (req, res) => {
     if (errors) {
         return res.status(400).send(errors)
     }
-    const status = oxygen.saveData()
+    const status = oxygen.saveData(req.session.email)
     if (!status) {
         return res.status(500).send()
     }
@@ -30,7 +30,7 @@ router.post('/ambulance', validate, async (req, res) => {
     if (errors) {
         return res.status(400).send(errors)
     }
-    const status = ambulance.saveData()
+    const status = ambulance.saveData(req.session.email)
     if (!status) {
         return res.status(500).send()
     }
@@ -43,7 +43,7 @@ router.post('/food', validate, async (req, res) => {
     if (errors) {
         return res.status(400).send(errors)
     }
-    const status = food.saveData()
+    const status = food.saveData(req.session.email)
     if (!status) {
         return res.status(500).send()
     }
@@ -56,7 +56,7 @@ router.post('/hospitals', validate, async (req, res) => {
     if (errors) {
         return res.status(400).send(errors)
     }
-    const status = hospitals.saveData()
+    const status = hospitals.saveData(req.session.email)
     if (!status) {
         return res.status(500).send()
     }
@@ -69,7 +69,7 @@ router.post('/injection', validate, async (req, res) => {
     if (errors) {
         return res.status(400).send(errors)
     }
-    const status = injection.saveData()
+    const status = injection.saveData(req.session.email)
     if (!status) {
         return res.status(500).send()
     }
@@ -82,7 +82,7 @@ router.post('/plasma', validate, async (req, res) => {
     if (errors) {
         return res.status(400).send(errors)
     }
-    const status = plasma.saveData()
+    const status = plasma.saveData(req.session.email)
     if (!status) {
         return res.status(500).send()
     }
