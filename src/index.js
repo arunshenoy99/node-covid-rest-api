@@ -1,8 +1,10 @@
+const path = require('path')
+
 const express = require('express')
 const hbs = require('hbs')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const path = require('path')
+const MemoryStore = require('memorystore')(session)
 
 const serviceRouter = require('./routers/service')
 const otpRouter = require('./routers/otp')
@@ -17,7 +19,17 @@ const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
 
 app.use(cookieParser())
-app.use(session({ secret: process.env.SESSION_TOKEN, resave: false, saveUninitialized: true }))
+app.use(session({
+    secret: process.env.SESSION_TOKEN,
+    cookie: {
+        httpOnly: true,
+        secure: true,
+        maxAge: 86400000
+    },
+    store: new MemoryStore({ checkPeriod: 86400000 }),
+    resave: false,
+    saveUninitialized: true
+}))
 app.use(express.static(publicPath))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -26,6 +38,7 @@ app.use(otpRouter)
 app.use(serviceRouter)
 app.use(dataRouter)
 
+app.set('trust proxy', 1)
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
