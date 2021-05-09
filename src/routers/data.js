@@ -1,6 +1,7 @@
 const express = require('express')
 
 const { getData, getAllData } = require('../utils/data')
+const admin = require('../middleware/admin')
 
 const dataRouter = express.Router()
 
@@ -9,7 +10,7 @@ dataRouter.get('/data/links', (req, res) => {
     res.json(links)
 })
 
-dataRouter.get('/data/backup', (req, res) => {
+dataRouter.get('/data/backup', admin, (req, res) => {
     try {
         const backup = getAllData()
         res.json(backup)
