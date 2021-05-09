@@ -1,12 +1,21 @@
 const express = require('express')
 
-const { getData } = require('../utils/data')
+const { getData, getAllData } = require('../utils/data')
 
 const dataRouter = express.Router()
 
 dataRouter.get('/data/links', (req, res) => {
     const links = getData('links')
     res.json(links)
+})
+
+dataRouter.get('/data/backup', (req, res) => {
+    try {
+        const backup = getAllData()
+        res.json(backup)
+    } catch (e) {
+        res.status(500).send()
+    }
 })
 
 dataRouter.get('/data/:service', (req, res) => {
