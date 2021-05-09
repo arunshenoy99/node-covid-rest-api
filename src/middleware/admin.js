@@ -1,10 +1,10 @@
 const admin = (req, res, next) => {
     try {
-        if (!req.body.token) {
+        if (!req.query.token) {
             throw new Error()
         }
 
-        if (req.body.token != process.env.ADMIN_TOKEN) {
+        if (req.query.token != process.env.ADMIN_TOKEN) {
             throw new Error()
         }
 
