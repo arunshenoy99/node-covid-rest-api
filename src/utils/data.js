@@ -12,7 +12,7 @@ const saveData = (service, newData) => {
     const fileName = path.join(__dirname, `../data/${service}.json`)
     const buffer = fs.readFileSync(fileName)
     let oldData = JSON.parse(buffer)
-    oldData = oldData.concat(newData)
+    oldData.unshift(newData)
     const jsonData = JSON.stringify(oldData)
     try {
         fs.writeFileSync(fileName, jsonData)
