@@ -1,5 +1,6 @@
 const express = require('express')
 const { getServiceDetails } = require('../utils/data')
+const { successLogger, errorLogger } = require('../utils/logger')
 const validate = require('../middleware/validate')
 
 const Ambulance = require('../models/ambulance')
@@ -19,9 +20,11 @@ router.post('/oxygen', validate, async (req, res) => {
     }
     const status = oxygen.saveData(req.session.email)
     if (!status) {
-        return res.status(500).send()
+        res.status(500).send()
+        return errorLogger.error(`Error saving data oxygen for ${req.session.email}.`)
     }
     res.status(201).send()
+    successLogger.info(`New oxygen data from ${req.session.email}.`)
 })
 
 router.post('/ambulance', validate, async (req, res) => {
@@ -32,9 +35,11 @@ router.post('/ambulance', validate, async (req, res) => {
     }
     const status = ambulance.saveData(req.session.email)
     if (!status) {
-        return res.status(500).send()
+        res.status(500).send()
+        return errorLogger.error(`Error saving data ambulance for ${req.session.email}.`)
     }
     res.status(201).send()
+    successLogger.info(`New ambulance data from ${req.session.email}.`)
 })
 
 router.post('/food', validate, async (req, res) => {
@@ -45,9 +50,11 @@ router.post('/food', validate, async (req, res) => {
     }
     const status = food.saveData(req.session.email)
     if (!status) {
-        return res.status(500).send()
+        res.status(500).send()
+        return errorLogger.error(`Error saving data food for ${req.session.email}.`)
     }
     res.status(201).send()
+    successLogger.info(`New food data from ${req.session.email}.`)
 })
 
 router.post('/hospitals', validate, async (req, res) => {
@@ -58,9 +65,11 @@ router.post('/hospitals', validate, async (req, res) => {
     }
     const status = hospitals.saveData(req.session.email)
     if (!status) {
-        return res.status(500).send()
+        res.status(500).send()
+        return errorLogger.error(`Error saving data hospitals for ${req.session.email}.`)
     }
     res.status(201).send()
+    successLogger.info(`New hospitals data from ${req.session.email}.`)
 })
 
 router.post('/injection', validate, async (req, res) => {
@@ -71,9 +80,11 @@ router.post('/injection', validate, async (req, res) => {
     }
     const status = injection.saveData(req.session.email)
     if (!status) {
-        return res.status(500).send()
+        res.status(500).send()
+        return errorLogger.error(`Error saving data injection for ${req.session.email}.`)
     }
     res.status(201).send()
+    successLogger.info(`New injection data from ${req.session.email}.`)
 })
 
 router.post('/plasma', validate, async (req, res) => {
@@ -84,9 +95,11 @@ router.post('/plasma', validate, async (req, res) => {
     }
     const status = plasma.saveData(req.session.email)
     if (!status) {
-        return res.status(500).send()
+        res.status(500).send()
+        return errorLogger.error(`Error saving data plasma for ${req.session.email}.`)
     }
     res.status(201).send()
+    successLogger.info(`New plasma data from ${req.session.email}.`)
 })
 
 
@@ -95,13 +108,15 @@ router.get('/:service', (req, res) => {
     const service = req.params.service
     const isValid = allowedServices.includes(service)
     if (!isValid) {
-        return res.status(404).json({ error: 'The requested service was not found' })
+        res.status(404).json({ error: 'The requested service was not found' })
+        return successLogger.info(`Someone tried to access /${service}.`)
     }
     req.session.service = service
     req.session.displayService = service.charAt(0).toUpperCase() + service.slice(1)
     res.render('email', {
         displayService: req.session.displayService
     })
+    successLogger.info(`/${service} success.`)
 })
 
 router.get('/:service/form', validate, (req, res) => {
@@ -109,7 +124,8 @@ router.get('/:service/form', validate, (req, res) => {
     const service = req.params.service
     const isValid = allowedServices.includes(service)
     if (!isValid) {
-        return res.status(404).json({ error: 'The requested service was not found' })
+        res.status(404).json({ error: 'The requested service was not found' })
+        return successLogger.info(`Someone tried to access /${service}/form.`)
     }
     const serviceDetails = getServiceDetails(service)
     const displayService = service.charAt(0).toUpperCase() + service.slice(1)
@@ -118,6 +134,7 @@ router.get('/:service/form', validate, (req, res) => {
         displayService,
         service
     })
+    successLogger.info(`/${service}/form success.`)
 })
 
 module.exports = router

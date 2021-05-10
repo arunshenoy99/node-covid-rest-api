@@ -31,16 +31,16 @@ const getServiceDetails = (service) => {
     return serviceDetails
 }
 
-const getAllData = () => {
-    let backup = {}
-    const dirName = path.join(__dirname, '../data/')
+const getAllData = (dataDir) => {
+    let data = {}
+    const dirName = path.join(__dirname, dataDir)
     const files = fs.readdirSync(dirName)
     files.forEach((file) => {
         const buffer = fs.readFileSync(path.join(dirName, `/${file}`))
-        const data = JSON.parse(buffer)
-        backup[file] = data
+        const fileData = JSON.parse(buffer)
+        data[file] = fileData
     })
-    return backup
+    return data
 }
 
 module.exports = { getData, saveData, getServiceDetails, getAllData }
