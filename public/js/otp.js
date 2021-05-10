@@ -13,13 +13,18 @@ $(document).ready(function () {
             body: JSON.stringify({ otp: $otpInput.val() })
         })
 
-        const data = await response.json()
 
         if (response.status == 400) {
+            const data = await response.json()
             return $('#otp-feedback').html(data.error)
         }
 
+        if (response.status == 429) {
+            return $('#otp-feedback').html('Too many tries, please try again after some time.')
+        }
+
         if (response.status == 200) {
+            const data = await response.json()
             window.location.href = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/${data.path}`
         }
     })
