@@ -31,19 +31,18 @@ otpRouter.get('/otp', otpLimiter, (req, res) => {
         req.session.otp = otp
         req.session.valid = false
         sendOTP(email, otp)
-        successLogger.info(`OTP sent to ${email}.`)
         req.session.email = email
-    } catch (e) {
+        successLogger.info(`GET /otp success. Email:${email}`)
+        res.render('otp', {
+            email,
+            displayService: req.session.displayService,
+            service: req.session.service
+        })
+        successLogger.info(`GET /otp page load success. Email:${email}`)
+    } catch(e) {
         res.redirect(`${req.session.service}`)
-        errorLogger.error(`OTP error for ${email}: ${e}`)
+        errorLogger.error(`GET /otp failed. Email:${email}, Error:${e.message}`)
     }
-
-    res.render('otp', {
-        email,
-        displayService: req.session.displayService,
-        service: req.session.service
-    })
-    successLogger.info(`OTP page rendered for ${email}`)
 })
 
 otpRouter.post('/otp', otpLimiter, (req, res) => {
@@ -58,24 +57,29 @@ otpRouter.post('/otp', otpLimiter, (req, res) => {
 
     if (otp != req.session.otp) {
         res.status(400).json({ error: 'Invalid OTP. Please try again in some time.' })
-        return errorLogger.warn(`Invalid OTP entry for ${req.session.email}: Original OTP=${req.session.otp} Entered OTP: ${otp}`)
+        return errorLogger.error(`POST /otp failed. Email:${req.session.email}, Original OTP:${req.session.otp}, Entered OTP:${otp}`)
     }
 
     req.session.valid = true
     
     res.status(200).json({ path: `${req.session.service}/form` })
-    successLogger.info(`Validated OTP for ${req.session.email}`)
+    successLogger.info(`POST /otp success. Email:${req.session.email}`)
 })
 
 otpRouter.post('/otp/resend', otpResendLimiter, (req, res) => {
-    if (req.session.email && req.session.otp) {
-        sendOTP(req.session.email, req.session.otp)
-        res.status(200).send()
-        return successLogger.info(`Resent OTP for ${req.session.email}`)
+    if (!req.session.email || !req.session.otp) {
+        res.status(400).json({ error: 'Could not resend OTP.' })
+        return errorLogger.error(`POST /otp/resend failed. Email:${req.session.email}, OTP:${req.session.otp}`)
     }
     
-    res.status(400).json({ error: 'Could not resend OTP.' })
-    errorLogger.error(`Error resending OTP for ${req.session.email}`)
+    try {
+        sendOTP(req.session.email, req.session.otp)
+        res.status(200).send()
+        successLogger.info(`POST /otp/resend success. Email:${req.session.email}`)
+    } catch (e) {
+        res.status(400).json({ error: 'Could not resend OTP.' })
+        errorLogger.error(`POST /otp/resend failed. Email:${req.session.email}, OTP:${req.session.otp}`)
+    }
 })
 
 module.exports = otpRouter

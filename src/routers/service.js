@@ -21,10 +21,10 @@ router.post('/oxygen', validate, async (req, res) => {
     const status = oxygen.saveData(req.session.email)
     if (!status) {
         res.status(500).send()
-        return errorLogger.error(`Error saving data oxygen for ${req.session.email}.`)
+        return errorLogger.error(`${req.method} ${req.path} failed. Email:${req.session.email}`)
     }
     res.status(201).send()
-    successLogger.info(`New oxygen data from ${req.session.email}.`)
+    successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
 })
 
 router.post('/ambulance', validate, async (req, res) => {
@@ -36,10 +36,10 @@ router.post('/ambulance', validate, async (req, res) => {
     const status = ambulance.saveData(req.session.email)
     if (!status) {
         res.status(500).send()
-        return errorLogger.error(`Error saving data ambulance for ${req.session.email}.`)
+        return errorLogger.error(`${req.method} ${req.path} failed. Email:${req.session.email}`)
     }
     res.status(201).send()
-    successLogger.info(`New ambulance data from ${req.session.email}.`)
+    successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
 })
 
 router.post('/food', validate, async (req, res) => {
@@ -51,10 +51,10 @@ router.post('/food', validate, async (req, res) => {
     const status = food.saveData(req.session.email)
     if (!status) {
         res.status(500).send()
-        return errorLogger.error(`Error saving data food for ${req.session.email}.`)
+        return errorLogger.error(`${req.method} ${req.path} failed. Email:${req.session.email}`)
     }
     res.status(201).send()
-    successLogger.info(`New food data from ${req.session.email}.`)
+    successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
 })
 
 router.post('/hospitals', validate, async (req, res) => {
@@ -66,10 +66,10 @@ router.post('/hospitals', validate, async (req, res) => {
     const status = hospitals.saveData(req.session.email)
     if (!status) {
         res.status(500).send()
-        return errorLogger.error(`Error saving data hospitals for ${req.session.email}.`)
+        return errorLogger.error(`${req.method} ${req.path} failed. Email:${req.session.email}`)
     }
     res.status(201).send()
-    successLogger.info(`New hospitals data from ${req.session.email}.`)
+    successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
 })
 
 router.post('/injection', validate, async (req, res) => {
@@ -81,10 +81,10 @@ router.post('/injection', validate, async (req, res) => {
     const status = injection.saveData(req.session.email)
     if (!status) {
         res.status(500).send()
-        return errorLogger.error(`Error saving data injection for ${req.session.email}.`)
+        return errorLogger.error(`${req.method} ${req.path} failed. Email:${req.session.email}`)
     }
     res.status(201).send()
-    successLogger.info(`New injection data from ${req.session.email}.`)
+    successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
 })
 
 router.post('/plasma', validate, async (req, res) => {
@@ -96,10 +96,10 @@ router.post('/plasma', validate, async (req, res) => {
     const status = plasma.saveData(req.session.email)
     if (!status) {
         res.status(500).send()
-        return errorLogger.error(`Error saving data plasma for ${req.session.email}.`)
+        return errorLogger.error(`${req.method} ${req.path} failed. Email:${req.session.email}`)
     }
     res.status(201).send()
-    successLogger.info(`New plasma data from ${req.session.email}.`)
+    successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
 })
 
 
@@ -109,14 +109,13 @@ router.get('/:service', (req, res) => {
     const isValid = allowedServices.includes(service)
     if (!isValid) {
         res.status(404).json({ error: 'The requested service was not found' })
-        return successLogger.info(`Someone tried to access /${service}.`)
     }
     req.session.service = service
     req.session.displayService = service.charAt(0).toUpperCase() + service.slice(1)
     res.render('email', {
         displayService: req.session.displayService
     })
-    successLogger.info(`/${service} success.`)
+    successLogger.info(`GET /${service} success.`)
 })
 
 router.get('/:service/form', validate, (req, res) => {
@@ -125,16 +124,20 @@ router.get('/:service/form', validate, (req, res) => {
     const isValid = allowedServices.includes(service)
     if (!isValid) {
         res.status(404).json({ error: 'The requested service was not found' })
-        return successLogger.info(`Someone tried to access /${service}/form.`)
     }
-    const serviceDetails = getServiceDetails(service)
-    const displayService = service.charAt(0).toUpperCase() + service.slice(1)
-    res.render('service.hbs', {
-        serviceDetails,
-        displayService,
-        service
-    })
-    successLogger.info(`/${service}/form success.`)
+    try {
+        const serviceDetails = getServiceDetails(service)
+        const displayService = service.charAt(0).toUpperCase() + service.slice(1)
+        res.render('service.hbs', {
+            serviceDetails,
+            displayService,
+            service
+        })
+        successLogger.info(`GET /${service}/form success. Email:${req.session.email}`)
+    } catch (e) {
+        res.status(500).send()
+        errorLogger.error(`GET /${service}/form failed. Email:${req.session.email}, Valid:${req.session.valid}, Error: ${e.message}`)
+    }
 })
 
 module.exports = router

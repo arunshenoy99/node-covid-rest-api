@@ -31,9 +31,9 @@ const getServiceDetails = (service) => {
     return serviceDetails
 }
 
-const getAllData = (dataDir) => {
+const getAllData = () => {
     let data = {}
-    const dirName = path.join(__dirname, dataDir)
+    const dirName = path.join(__dirname, '../data/')
     const files = fs.readdirSync(dirName)
     files.forEach((file) => {
         const buffer = fs.readFileSync(path.join(dirName, `/${file}`))
@@ -43,4 +43,21 @@ const getAllData = (dataDir) => {
     return data
 }
 
-module.exports = { getData, saveData, getServiceDetails, getAllData }
+const getLogsData = () => {
+    let finalLog = {}
+    const dirName = path.join(__dirname, '../../logs/')
+    const files = fs.readdirSync(dirName)
+    files.forEach((file) => {
+        const buffer = fs.readFileSync(path.join(dirName, `/${file}`))
+        const fileData = buffer.toString().replace(/\r/g, '').split('\n')
+        fileData.splice(-1, 1)
+        let logData = []
+        fileData.forEach((data) => {
+            logData.push(JSON.parse(data))
+        })
+        finalLog[file] = logData
+    })
+    return finalLog
+}
+
+module.exports = { getData, saveData, getServiceDetails, getAllData, getLogsData }

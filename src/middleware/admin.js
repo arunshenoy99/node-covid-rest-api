@@ -12,7 +12,7 @@ const admin = (req, res, next) => {
         next()
     } catch(e) {
         res.status(401).json({ error: 'The requested service was not found.' })
-        errorLogger.warn(`admin middleware failed: token provided:${req.query.token}`)
+        errorLogger.warn(`${req.method} ${req.path} failed. Token:${req.query.token}`)
     } 
 }
 

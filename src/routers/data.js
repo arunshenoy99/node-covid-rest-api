@@ -1,25 +1,41 @@
 const express = require('express')
 
-const { getData, getAllData } = require('../utils/data')
+const { getData, getAllData, getLogsData } = require('../utils/data')
 const { successLogger, errorLogger } = require('../utils/logger')
 const admin = require('../middleware/admin')
 
 const dataRouter = express.Router()
 
 dataRouter.get('/data/links', (req, res) => {
-    const links = getData('links')
-    res.json(links)
-    successLogger.info('/data/links success.')
+    try {
+        const links = getData('links')
+        res.json(links)
+        successLogger.info('GET /data/links success.')
+    } catch (e) {
+        res.status(500).send()
+        errorLogger.error(`GET /data/links failed. Error:${e.message}`)
+    }
 })
 
 dataRouter.get('/data/backup', admin, (req, res) => {
     try {
-        const backup = getAllData('../data/')
+        const backup = getAllData()
         res.json(backup)
-        successLogger.info('/data/backup success.')
+        successLogger.info(`GET /data/backup success. IP:${req.ip}`)
     } catch (e) {
         res.status(500).send()
-        errorLogger.error(`/data/backup fail: ${e}`)
+        errorLogger.error(`GET /data/backup failed. Error:${e.message}`)
+    }
+})
+
+dataRouter.get('/data/logs', admin, (req, res) => {
+    try {
+        const logs = getLogsData('../../logs/')
+        res.status(200).json(logs)
+        successLogger.info(`GET /data/logs success. IP:${req.ip}`)
+    } catch (e) {
+        res.status(500).send()
+        errorLogger.error(`GET /data/logs failed. Error:${e.message}`)
     }
 })
 
@@ -30,9 +46,14 @@ dataRouter.get('/data/:service', (req, res) => {
     if (!isValid) {
         return res.status(404).json({ error: 'The requested service was not found.' })
     }
-    const data = getData(service)
-    res.json(data)
-    successLogger.info(`/data/${service} success.`)
+    try {
+        const data = getData(service)
+        res.json(data)
+        successLogger.info(`GET /data/${service} success.`)
+    } catch (e) {
+        res.status(500).send()
+        errorLogger.error(`GET /data/${service} failed. Error:${e.message}`)
+    }
 })
 
 module.exports = dataRouter
