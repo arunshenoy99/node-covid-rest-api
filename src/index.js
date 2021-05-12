@@ -1,5 +1,6 @@
-const path = require('path')
+require('./db/mongoose')
 
+const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
 const cookieParser = require('cookie-parser')
@@ -11,6 +12,8 @@ const otpRouter = require('./routers/otp')
 const dataRouter = require('./routers/data')
 
 const apiLimiter = require('./middleware/rateLimit')
+
+const { successLogger } = require('./utils/logger')
 
 const app = express()
 
@@ -57,5 +60,5 @@ app.get('*', (req, res) => {
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-    console.log('Server is up and running !')
+    successLogger.info(`Server success. PORT=${port}`)
 })

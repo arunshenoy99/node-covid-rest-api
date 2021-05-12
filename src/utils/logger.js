@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const winston = require('winston')
 require('winston-daily-rotate-file')
 
@@ -37,4 +40,21 @@ errorLogger.add(new winston.transports.DailyRotateFile({
     )
 }))
 
-module.exports = { successLogger, errorLogger }
+const getLogs = () => {
+    let finalLog = {}
+    const dirName = path.join(__dirname, '../../logs/')
+    const files = fs.readdirSync(dirName)
+    files.forEach((file) => {
+        const buffer = fs.readFileSync(path.join(dirName, `/${file}`))
+        const fileData = buffer.toString().replace(/\r/g, '').split('\n')
+        fileData.splice(-1, 1)
+        let logData = []
+        fileData.forEach((data) => {
+            logData.push(JSON.parse(data))
+        })
+        finalLog[file] = logData
+    })
+    return finalLog
+}
+
+module.exports = { successLogger, errorLogger, getLogs }

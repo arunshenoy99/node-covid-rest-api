@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/css/otp.css">
     </head>
     <body>
+        {{>spinner}}
         <div class="container">
             <div class="row bg-white form-container">
                 <div class="col-12 align-self-center">
@@ -22,7 +23,7 @@
                     <form id="otp-form">
                         <div class="form-group row justify-content-center">
                             <div class="col-md-4">
-                                <input type="number" class="form-control" id="otp" name="otp" placeholder="One Time Password" required>
+                                <input type="number" class="form-control" id="otp" name="otp" placeholder="One Time Password" required tabindex="-1" autofocus>
                                 <div class="valid-feedback d-block text-center"></div>
                                 <div class="invalid-feedback d-block" id="otp-feedback"></div>
                             </div>

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $('.spinner-wrapper').fadeOut(500)
     $('#otp-form').submit(async function (e) {
         const otpUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/otp`
         const $otpInput = $('#otp')
@@ -12,7 +13,6 @@ $(document).ready(function () {
             },
             body: JSON.stringify({ otp: $otpInput.val() })
         })
-
 
         if (response.status == 400) {
             const data = await response.json()

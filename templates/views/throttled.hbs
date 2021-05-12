@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>{{displayService}}</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/email.css">
+    </head>
+    <body>
+        {{>emailModal}}
+        {{>spinner}}
+        <div class="container">
+            <div class="row bg-white form-container">
+                <div class="col-12 align-self-center">
+                    <div class="text-center">
+                        <h1 id="service-heading">Add contact for {{displayService}}</h1>
+                        <p class="text-warning">You have placed too many requests. Please try again after {{seconds}}.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.spinner-wrapper').fadeOut(500)
+            })
+        </script>
+    </body>
+</html>

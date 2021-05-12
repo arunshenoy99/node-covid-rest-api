@@ -31,7 +31,7 @@ const getServiceDetails = (service) => {
     return serviceDetails
 }
 
-const getAllData = () => {
+const getBackupData = () => {
     let data = {}
     const dirName = path.join(__dirname, '../data/')
     const files = fs.readdirSync(dirName)
@@ -60,4 +60,4 @@ const getLogsData = () => {
     return finalLog
 }
 
-module.exports = { getData, saveData, getServiceDetails, getAllData, getLogsData }
+module.exports = { getData, saveData, getServiceDetails, getBackupData, getLogsData }

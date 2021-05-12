@@ -10,20 +10,32 @@ const { otpLimiter, otpResendLimiter } = require('../middleware/otpRateLimit')
 const otpRouter = express.Router()
 
 otpRouter.get('/otp', otpLimiter, (req, res) => {
-    if (!req.session.service) {
+    if (!req.session.service || req.session.valid) {
         return res.status(401).send({ error: "The requested service was not found." })
     }
     
     let email = req.query.Email
+    let policy = req.query.policy
 
     if (!email) {
-        return res.redirect(`/${req.session.service}`)
+        return res.render('email', {
+            emailError: 'Invalid Email address'
+        })
+    }
+
+    if (!policy) {
+        return res.render('email', {
+            emailError: 'Please agree to our privacy policy.',
+            email
+        })
     }
 
     email = email.trim()
 
     if (!validator.isEmail(email)) {
-        return res.redirect(`/${req.session.service}`)
+        return res.render('email', {
+            emailError: 'Invalid email address'
+        })
     }
 
     try {

@@ -1,16 +1,10 @@
-@font-face {
-    font-family: itimRegular;
-    src: url('../fonts//Itim-Regular.ttf');
-}
-
 html {
     scroll-behavior: smooth;
-    height: 100%
 }
 
 body {
-    height: 100%;
-    font-family: itimRegular;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    padding:1em;
 }
 
 .spinner-wrapper {
@@ -30,14 +24,9 @@ body {
 }
 
 .container {
-    height: 100%;
+    margin-top: 20px 0px;
 }
 
-#service-heading {
-    margin: 50px 10px;
-}
-
-.form-container {
-    height: 100%;
-    overflow-y: auto;
+p {
+    text-align: justify;
 }

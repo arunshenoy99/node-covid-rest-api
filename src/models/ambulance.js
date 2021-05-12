@@ -1,55 +1,38 @@
 const mongoose = require('mongoose')
-const { saveData } = require('../utils/data')
-const { phoneNumber } = require('../utils/validators')
 
 const ambulanceSchema = new mongoose.Schema({
     'Name': {
-        type: String,
-        required: true,
-        trim: true,
+        type: String
     },
     'Contributor': {
         type: String
     },
     'Phone': {
-        type: String,
-        required: true,
-        trim: true,
-        validate: {
-            validator: phoneNumber,
-            message: 'Invalid phone number.'
-        }
+        type: String
     },
     'City': {
-        type: String,
-        trim: true
+        type: String
     },
     'Area': {
-        type: String,
-        trim: true
+        type: String
     },
     'Description': {
-        type: String,
-        trim: true,
-        maxlength: 1000,
+        type: String
     },
     'Status': {
         type: String
     },
     'Timestamp': {
-        type: Number,
-        default: Date.now()
+        type: Number
     }
 })
 
-ambulanceSchema.methods.saveData = function (contributor) {
-    const ambulance = this.toObject()
-    delete ambulance._id
-    ambulance.Contributor = contributor
-    const status = saveData('ambulance', ambulance)
-    return status
+ambulanceSchema.methods.toJSON = function () {
+    const service = this
+    const serviceObject = service.toObject()
+    delete serviceObject._id
+    delete serviceObject.Contributor
+    return serviceObject
 }
 
-const Ambulance = mongoose.model('Ambulance', ambulanceSchema)
-
-module.exports = Ambulance
+mongoose.model('ambulance', ambulanceSchema)

@@ -10,6 +10,7 @@
     </head>
     <body>
         {{>emailModal}}
+        {{>spinner}}
         <div class="container">
             <div class="row bg-white form-container">
                 <div class="col-12 align-self-center">
@@ -19,12 +20,23 @@
                     <form id="email-form" action="/otp">
                         <div class="form-group row justify-content-center">
                             <div class="col-md-4">
-                                <input type="email" class="form-control" id="Email" name="Email" placeholder="Your Email" required>
+                                <input type="email" class="form-control" id="Email" name="Email" placeholder="Your Email" required tabindex="-1" value="{{email}}" autofocus>
+                                <div class="invalid-feedback d-block" id="email-feedback">{{emailError}}</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-outline-success rounded-pill" id="email-form-submit">Send One Time Password</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="policy" id="policy">
+                                    <label for="policy" class="form-check-label">
+                                        By using this form you agree with the storage and handling of your email by this app in accordance with our <a href="/data/privacy" class="text-info">Privacy Policy</a>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -39,5 +51,10 @@
         <script src="/js/jquery.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.spinner-wrapper').fadeOut(500)
+            })
+        </script>
     </body>
 </html>

@@ -1,55 +1,38 @@
 const mongoose = require('mongoose')
-const { saveData } = require('../utils/data')
-const { phoneNumber } = require('../utils/validators')
 
 const plasmaSchema = new mongoose.Schema({
     'Name': {
-        type: String,
-        required: true,
-        trim: true,
+        type: String
     },
     'Contributor': {
         type: String
     },
     'Phone': {
-        type: String,
-        required: true,
-        trim: true,
-        validate: {
-            validator: phoneNumber,
-            message: 'Invalid phone number.'
-        }
+        type: String
     },
     'City': {
-        type: String,
-        trim: true
+        type: String
     },
     'Area': {
-        type: String,
-        trim: true
+        type: String
     },
     'Description': {
-        type: String,
-        trim: true,
-        maxlength: 1000,
+        type: String
     },
     'Status': {
         type: String
     },
     'Timestamp': {
-        type: Number,
-        default: Date.now()
-    },
+        type: Number
+    }
 })
 
-plasmaSchema.methods.saveData = function (contributor) {
-    const plasma = this.toObject()
-    delete plasma._id
-    plasma.Contributor = contributor
-    const status = saveData('plasma', plasma)
-    return status
+plasmaSchema.methods.toJSON = function () {
+    const service = this
+    const serviceObject = service.toObject()
+    delete serviceObject._id
+    delete serviceObject.Contributor
+    return serviceObject
 }
 
-const Plasma = mongoose.model('Plasma', plasmaSchema)
-
-module.exports = Plasma
+mongoose.model('plasma', plasmaSchema)
