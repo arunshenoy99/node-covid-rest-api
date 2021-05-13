@@ -61,6 +61,8 @@ const contributionSchema = new mongoose.Schema({
     }
 })
 
+contributionSchema.index({ Phone: 1, Service: 1 }, { unique: true })
+
 contributionSchema.methods.saveData = async function (contributor, service) {
     const contribution = this
     contribution.Contributor = contributor

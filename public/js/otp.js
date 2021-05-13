@@ -14,6 +14,7 @@ $(document).ready(function () {
             body: JSON.stringify({ otp: $otpInput.val() })
         })
 
+
         if (response.status == 400) {
             const data = await response.json()
             return $('#otp-feedback').html(data.error)

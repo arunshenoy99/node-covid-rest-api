@@ -16,9 +16,16 @@ $(document).ready(function () {
             $('.invalid-feedback').html('')
             $('#successModal').modal('show')
         }
+        else if (response.status === 401) {
+            window.location.href = url
+        } 
         else {
             $('.invalid-feedback').html('')
             const data = await response.json()
+            if (data.duplicate) {
+                $('#Phone-feedback').html(`Duplicate phone number for ${service}.`)
+                return $('#service-form-submit').attr('disabled', false)
+            }
             const errors = Object.keys(data.errors)
             errors.forEach((error) => {
                 $(`[id='${error}-feedback']`).html(data.errors[error].message)

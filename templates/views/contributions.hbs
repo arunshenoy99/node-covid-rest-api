@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Contributions</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/contributions.css">
+    </head>
+    <body>
+        {{>spinner}}
+        <div class="container" id="contributions-container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>Contributions</h1>
+                </div>
+                {{#each contributions}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" id="card-{{_id}}">
+                            <h3 class="card-header bg-primary text-white">{{Name}}</h3>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-6">Name:</dt>
+                                    <dd class="col-6">{{Name}}</dt>
+                                    <dt class="col-6">Contributor:</dt>
+                                    <dd class="col-6">{{Contributor}}</dt>
+                                    <dt class="col-6">Phone:</dt>
+                                    <dd class="col-6">{{Phone}}</dt>
+                                    <dt class="col-6">City:</dt>
+                                    <dd class="col-6">{{City}}</dt>
+                                    <dt class="col-6">Area:</dt>
+                                    <dd class="col-6">{{Area}}</dt>
+                                    <dt class="col-6">Description:</dt>
+                                    <dd class="col-6">{{Description}}</dt>
+                                    <dt class="col-6">Service:</dt>
+                                    <dd class="col-6">{{Service}}</dt>
+                                    <dt class="col-6">Status:</dt>
+                                    <dd class="col-6">{{Status}}</dt>
+                                </dl>
+                                <p id="status-{{_id}}"></p>
+                                <button class="btn btn-success validate-btn" id="valid-{{_id}}">Validate</button>
+                                <button class="btn btn-danger invalidate-btn" id="invalid-{{_id}}">Invalidate</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/contributions.js"></script>
+    </body>
+</html>

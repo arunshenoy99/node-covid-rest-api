@@ -10,7 +10,11 @@ const validate = (req, res, next) => {
         }
         next()
     } catch (e) {
-        res.status(401).json({ error: 'Please authenticate yourself.' })
+        if (req.method == 'GET') {
+            res.redirect(`/${req.params.service}`)
+        } else {
+            res.status(401).json({ error: 'Please authenticate yourself.' })
+        }
         errorLogger.warn(`${req.method} ${req.path} failed. No authentication provided.`)
     }
 }

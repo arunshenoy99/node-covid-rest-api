@@ -5,11 +5,12 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%
 }
 
 body {
-    font-family: itimRegular; 
-    padding:1em;
+    height: 100%;
+    font-family: itimRegular;
 }
 
 .spinner-wrapper {
@@ -29,9 +30,9 @@ body {
 }
 
 .container {
-    margin-top: 20px 0px;
+    height: 100%;
 }
 
-p {
-    text-align: justify;
+.row {
+    margin-top: 25px;
 }

@@ -10,7 +10,7 @@ const { otpLimiter, otpResendLimiter } = require('../middleware/otpRateLimit')
 const otpRouter = express.Router()
 
 otpRouter.get('/otp', otpLimiter, (req, res) => {
-    if (!req.session.service || req.session.valid) {
+    if (!req.session.service) {
         return res.status(401).send({ error: "The requested service was not found." })
     }
     

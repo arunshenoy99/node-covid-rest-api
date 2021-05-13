@@ -26,6 +26,9 @@ router.post('/:service', validate, async (req, res) => {
         res.status(201).send()
         successLogger.info(`${req.method} ${req.path} success. Email:${req.session.email}`)
     } catch (e) {
+        if (e.code == 11000) {
+            return res.status(400).json({ duplicate: true })
+        }
         res.status(400).send(e)
     }
 })
