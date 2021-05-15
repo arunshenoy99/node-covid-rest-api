@@ -45,7 +45,8 @@ const contributionSchema = new mongoose.Schema({
         maxlength: 1000,
     },
     'Status': {
-        type: String
+        type: String,
+        required: true,
     },
     'Timestamp': {
         type: Number,
@@ -54,14 +55,16 @@ const contributionSchema = new mongoose.Schema({
     'Service': {
         type: String,
         required: true
-    },
-    'Valid': {
-        type: Boolean,
-        default: false
     }
 })
 
-contributionSchema.index({ Phone: 1, Service: 1 }, { unique: true })
+contributionSchema.index({ 'Phone': 1, 'Service': 1, 'Status': 1 }, { unique: true })
+
+contributionSchema.pre('saveData', function (next) {
+    const contribution = this
+    contribution.Status = contribution.Status ? "Valid" : "Invalid"
+    next()
+})
 
 contributionSchema.methods.saveData = async function (contributor, service) {
     const contribution = this

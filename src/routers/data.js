@@ -23,18 +23,34 @@ dataRouter.post('/data/contributions/:id', async (req, res) => {
         }
         const contributionObject = contribution.toObject()
         const serviceModel = mongoose.model(contributionObject.Service)
-        const unecessaryFields = ['_id', '__v', 'Valid', 'Service']
+        const unecessaryFields = ['_id', '__v', 'Service']
         unecessaryFields.forEach((field) => {
             delete contributionObject[field]
         })
-        const service = new serviceModel(contributionObject)
-        await service.save()
-        await contribution.delete()
-        res.status(200).send()
-        successLogger.info(`POST /data/contributions/${req.params.id} success. IP:${req.ip}`)
+        const exists = await serviceModel.findOne({ Phone: contributionObject.Phone })
+        if (exists && (contributionObject.Status === "Valid")) {
+            const contributionKeys = Object.keys(contributionObject)
+            contributionKeys.forEach((key) => {
+                exists[key] = contributionObject[key]
+            })
+            await exists.save()
+            await contribution.delete()
+            res.status(200).send()
+            successLogger.info(`POST /data/contributions/${req.params.id} success. IP:${req.ip}`)
+        } else if (exists) {
+            await contribution.delete()
+            res.status(200).send()
+            successLogger.info(`POST /data/contributions/${req.params.id} success. IP:${req.ip}`)
+        } else {
+            const service = new serviceModel(contributionObject)
+            await service.save()
+            await contribution.delete()
+            res.status(200).send()
+            successLogger.info(`POST /data/contributions/${req.params.id} success. IP:${req.ip}`)
+        }
     } catch (e) {
         res.status(500).send()
-        errorLogger.error(`POST /data/contributions/${req.paramas.id} failed. Error:${e}`)
+        errorLogger.error(`POST /data/contributions/${req.params.id} failed. Error:${e}`)
     }
 })
 

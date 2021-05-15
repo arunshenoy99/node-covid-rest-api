@@ -5,9 +5,6 @@ const validate = (req, res, next) => {
         if (!req.session.email || !req.session.valid) {
             throw new Error()
         }
-        if (req.session.service != req.params.service) {
-            throw new Error()
-        }
         next()
     } catch (e) {
         if (req.method == 'GET') {

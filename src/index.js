@@ -1,11 +1,10 @@
-require('./db/mongoose')
+const store = require('./db/mongoose')
 
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const MemoryStore = require('memorystore')(session)
 
 const serviceRouter = require('./routers/service')
 const otpRouter = require('./routers/otp')
@@ -29,7 +28,7 @@ app.use(session({
         secure: true,
         maxAge: 86400000
     },
-    store: new MemoryStore({ checkPeriod: 86400000 }),
+    store,
     resave: false,
     saveUninitialized: true
 }))

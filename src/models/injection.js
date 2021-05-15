@@ -8,7 +8,8 @@ const injectionSchema = new mongoose.Schema({
         type: String
     },
     'Phone': {
-        type: String
+        type: String,
+        unique: true
     },
     'City': {
         type: String

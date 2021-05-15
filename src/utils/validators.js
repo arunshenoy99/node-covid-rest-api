@@ -8,7 +8,7 @@ const phoneNumber = (value) => {
 }
 
 const lettersOnly = (value) => {
-    return validator.isAlpha(value)
+    return value.match(/^[a-zA-Z ]+$/)
 }
 
 const cities = (value) => {

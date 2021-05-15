@@ -18,7 +18,7 @@ router.post('/:service', validate, async (req, res) => {
     const service = req.params.service
     const isValid = allowedServices.includes(service)
     if (!isValid) {
-        res.status(404).json({ error: 'The requested service was not found' })
+        return res.status(404).json({ error: 'The requested service was not found' })
     }
     const contribution = new Contribution(req.body)
     try {
@@ -38,7 +38,7 @@ router.get('/:service', (req, res) => {
     const service = req.params.service
     const isValid = allowedServices.includes(service)
     if (!isValid) {
-        res.status(404).json({ error: 'The requested service was not found' })
+        return res.status(404).json({ error: 'The requested service was not found' })
     }
     req.session.service = service
     req.session.displayService = service.charAt(0).toUpperCase() + service.slice(1)
@@ -51,9 +51,13 @@ router.get('/:service', (req, res) => {
 router.get('/:service/form', validate, (req, res) => {
     const allowedServices = ['ambulance', 'food', 'injection', 'plasma', 'hospitals', 'oxygen']
     const service = req.params.service
+    if (service != req.session.service) {
+        req.session.service = service
+        req.session.displayService = service.charAt(0).toUpperCase() + service.slice(1)
+    }
     const isValid = allowedServices.includes(service)
     if (!isValid) {
-        res.status(404).json({ error: 'The requested service was not found' })
+        return res.status(404).json({ error: 'The requested service was not found' })
     }
     try {
         const unecessaryFields = ['__v', '_id', 'Contributor', 'Status', 'Description', 'Timestamp']
