@@ -23,13 +23,17 @@ $(document).ready(function () {
             $('.invalid-feedback').html('')
             const data = await response.json()
             if (data.duplicate) {
-                $('#Phone-feedback').html(`Duplicate phone number for ${service}.`)
+                $('#Phone-feedback').html(`We already have a phone number for this contact in our data. Please provide an alternate number.`)
+                $(".form-container").animate({ scrollTop: "0" });
+                $('#errorModal').modal('show')
                 return $('#service-form-submit').attr('disabled', false)
             }
             const errors = Object.keys(data.errors)
             errors.forEach((error) => {
                 $(`[id='${error}-feedback']`).html(data.errors[error].message)
             })
+            $(".form-container").animate({ scrollTop: "0" });
+            $('#errorModal').modal('show')
         }
         $('#service-form-submit').attr('disabled', false)
     })

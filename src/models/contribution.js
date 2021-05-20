@@ -8,7 +8,7 @@ const contributionSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: lettersOnly,
-            message: 'Invalid Name.'
+            message: 'Please provide a valid name containing only letters.'
         }
     },
     'Contributor': {
@@ -20,7 +20,7 @@ const contributionSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: phoneNumber,
-            message: 'Invalid phone number.'
+            message: 'Please provide a valid phone number.'
         }
     },
     'City': {
@@ -28,7 +28,7 @@ const contributionSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: cities,
-            message: 'Invalid City.'
+            message: 'Please provide a single valid city name containing only letters.'
         }
     },
     'Area': {
@@ -36,7 +36,7 @@ const contributionSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: lettersOnly,
-            message: 'Invalid Area.'
+            message: 'Please provide a single area name containing only letters.'
         }
     },
     'Description': {
